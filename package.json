@@ -1,0 +1,134 @@
+{
+  "name": "nexus-dashboard",
+  "version": "2.0.0",
+  "description": "Nexus — Productivity Dashboard for Projects, Classes, Schools & Jobs",
+  "author": "Nexus",
+  "main": "main.js",
+  "scripts": {
+    "start": "concurrently \"cross-env BROWSER=none react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "react-scripts build && node -e \"try{require('fs').unlinkSync('./build/package.json')}catch(e){}\"",
+    "electron-start": "electron .",
+    "predist": "npm run build",
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:all": "electron-builder --mac --win",
+    "postinstall": "echo 'Setup complete!'"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "electron-store": "^8.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.nexus.dashboard",
+    "productName": "Nexus",
+    "directories": {
+      "output": "release"
+    },
+    "extraMetadata": {
+      "main": "main.js"
+    },
+    "files": [
+      "build/**/*",
+      "!build/package.json",
+      "main.js",
+      "preload.js",
+      "node_modules/electron-store/**/*",
+      "node_modules/conf/**/*",
+      "node_modules/atomically/**/*",
+      "node_modules/dot-prop/**/*",
+      "node_modules/env-paths/**/*",
+      "node_modules/json-schema-typed/**/*",
+      "node_modules/ajv/**/*",
+      "node_modules/ajv-formats/**/*",
+      "node_modules/fast-deep-equal/**/*",
+      "node_modules/json-schema-traverse/**/*",
+      "node_modules/uri-js/**/*",
+      "node_modules/punycode/**/*",
+      "node_modules/debounce-fn/**/*",
+      "node_modules/mimic-fn/**/*",
+      "node_modules/semver/**/*",
+      "node_modules/pkg-up/**/*",
+      "node_modules/find-up/**/*",
+      "node_modules/locate-path/**/*",
+      "node_modules/p-locate/**/*",
+      "node_modules/p-limit/**/*",
+      "node_modules/yocto-queue/**/*",
+      "node_modules/path-exists/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/electron-store/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "build-resources/icon_1024.png",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["universal"]
+        }
+      ],
+      "darkModeSupport": true,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "forceCodeSigning": false
+    },
+    "win": {
+      "icon": "build-resources/icon_256.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build-resources/icon_256.png",
+      "uninstallerIcon": "build-resources/icon_256.png",
+      "installerHeaderIcon": "build-resources/icon_256.png",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Nexus"
+    },
+    "dmg": {
+      "title": "Nexus Dashboard",
+      "icon": "build-resources/icon_1024.png",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 400
+      }
+    }
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version"]
+  },
+  "homepage": "./"
+}
